@@ -1,0 +1,27 @@
+
+<div class="container">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<style>
+.container{
+    border: solid 1px blue;
+    display: flex;
+    counter-reset: counter01;
+    &>span{
+        counter-increment: counter01;
+        border: solid 1px green;
+        width: 50px;
+        height: 50px;
+        &::after{
+            content: counter(counter01);
+        }
+    }
+}
+
+</style>
