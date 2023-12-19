@@ -1,60 +1,109 @@
-
-<section class="container">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-</section>
-<span>
-    这是一个span
-</span>
-<section class="container">
-    <div></div>
-    <div></div>
-    <div></div>
-</section>
-
 <style>
+body{
+    padding: 20px 30px;
+}
 .container{
     box-shadow: 2px 2px 22px rgba(0, 0, 0, 0.3);
-    min-height: 150px;
-    margin: 20px;
-    border: solid 2px blue;
+    border: solid 1px blue;
     counter-reset: counter01;
-    /* 
-        flex 容器独立成行，右侧有剩余空间也不受后续元素侵占（和 block 元素相同）
-        flex 容器会使子元素收缩，且横向排列，即使子元素是 block & width: 100%
-    */
-    /* display: block; */
-    display: flex;
-    flex-direction: row; /* row = 默认值*/
-    flex-wrap: wrap;
-    justify-content: center; /*使子元素置于主轴（横向）的中部*/ 
-
-    /* 👇 align 家族 */
-    align-items: center;  /* 使“单行”子元素们置于交叉轴中间 */
-    align-content: center; /* 使“多行”子元素们置于交叉轴中间 */
+    margin: 10px 0;
+    padding: 10px;
 }
-
-.container > div{
-    &:nth-child(2){
-        align-self: self-start;
-    }
-    /* 👆 flex 子元素属性 */
+.container > :where(div, span){
     counter-increment: counter01;
     border: solid 1px green;
-    display: block;
     width: 150px;
-    height: 50px;
+    min-height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     &::after{
         content: counter(counter01);
     }
 }
-
+hr{
+    margin: 30px 0 60px;
+}
+pre{
+    white-space: pre-line;
+}
+style[show]{
+    display: block;
+    white-space: pre;
+}
 </style>
+
+<div>
+    <section class="container">
+        <div></div>
+        <div></div>
+        <div></div>
+    </section>
+    <span class="span" >
+        这是一个span
+    </span>
+    <pre>
+        ● flex 容器独立成行，即使右侧有剩余空间也不容后续元素侵占（和 block 元素相同）
+        ● 见上方，<span> 元素没能挤上来
+        ● flex 容器会使子元素收缩，且横向排列，即使子元素是 block & width: 9999px
+    </pre>
+    <style>
+        @scope{
+            .container{
+                display: flex;
+                width: 30%;
+                & > *{
+                    /* width: 50px; */
+                    width: 9999px; /*  */
+                }
+            }
+            .span{
+                border: solid 1px
+            }
+        }
+    </style>
+</div>
+<hr/>
+
+
+<div>
+    <section class="container">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </section>
+    <style>
+        @scope{
+            .container{
+                height: 150px;
+                margin: 20px;
+                /* display: block; */
+                display: flex;
+                flex-direction: row; /* row = 默认值*/
+                /* flex-wrap: wrap; */
+                justify-content: center; /*使子元素置于主轴（横向）的中部*/ 
+    
+                /* 👇 align 家族 */
+                align-items: center;  /* 使“单行”子元素们置于交叉轴中间 */
+                align-content: center; /* 使“多行”子元素们... */
+            }
+            .container > div{
+                &:nth-child(2){
+                    /* align 家族不孝子，不听父级指令（父级 flex-wrap: nowrap; 时才有效） */
+                    /* 单行不孝子 */
+                    /* align-self: self-start;  */
+                    align-self: stretch; 
+                }
+                /* 👆 flex 子元素属性 */
+                width: 150px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    </style>
+</div>
