@@ -1,3 +1,10 @@
+<!-- <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/styles/a11y-dark.min.css" rel="stylesheet"> -->
+<!-- <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/styles/default.min.css" rel="stylesheet"> -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/dark.min.css"> -->
+<!-- <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/styles/  /monokai.min.css" rel="stylesheet"> -->
+<!-- <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" rel="stylesheet"> -->
+<link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/styles/monokai-sublime.min.css" rel="stylesheet">
+
 <style>
 body{
     padding: 20px 30px;
@@ -25,13 +32,11 @@ body{
 hr{
     margin: 30px 0 60px;
 }
-pre{
-    white-space: pre-line;
+pre code.hljs{
+    /* font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif,SimHei,SimSun; */
+    font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
 }
-style[show]{
-    display: block;
-    white-space: pre;
-}
+
 </style>
 
 <div>
@@ -63,6 +68,21 @@ style[show]{
             }
         }
     </style>
+    <pre ><code class="language-css">
+@scope{
+    .container{
+        display: flex;
+        width: 30%;
+        & > *{
+            /* width: 50px; */
+            width: 9999px; /*  */
+        }
+    }
+    .span{
+        border: solid 1px
+    }
+}
+    </code></pre>
 </div>
 <hr/>
 
@@ -107,3 +127,21 @@ style[show]{
         }
     </style>
 </div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+
+<script>
+    console.log("hljs", hljs);
+    /* hljs.highlightAll(); */
+    /* let blocks = document.querySelectorAll('.language-css'); */
+    
+    /* hljs.highlightElement(blocks[0]); */
+    hljs.configure({
+        languages: ['css'],
+        cssSelector: '.language-css'
+    });
+    hljs.highlightAll();
+
+</script>
+
