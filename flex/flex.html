@@ -1,13 +1,12 @@
-<!-- <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/styles/a11y-dark.min.css" rel="stylesheet"> -->
-<!-- <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/styles/default.min.css" rel="stylesheet"> -->
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/dark.min.css"> -->
-<!-- <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/styles/  /monokai.min.css" rel="stylesheet"> -->
-<!-- <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" rel="stylesheet"> -->
 <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/styles/monokai-sublime.min.css" rel="stylesheet">
 
 <style>
 body{
-    padding: 20px 30px;
+    margin: 0;
+    padding: 20px 30px 50vh;
+    &>*{
+        margin-bottom: 60px;
+    }
 }
 .container{
     box-shadow: 2px 2px 22px rgba(0, 0, 0, 0.3);
@@ -19,12 +18,14 @@ body{
 .container > :where(div, span){
     counter-increment: counter01;
     border: solid 1px green;
+    /* outline:  solid 1px red; */
     width: 150px;
     min-height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+    
     &::after{
         content: counter(counter01);
     }
@@ -36,7 +37,6 @@ pre code.hljs{
     /* font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif,SimHei,SimSun; */
     font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
 }
-
 </style>
 
 <div>
@@ -50,11 +50,29 @@ pre code.hljs{
     </span>
     <pre>
         ● flex 容器独立成行，即使右侧有剩余空间也不容后续元素侵占（和 block 元素相同）
-        ● 见上方，<span> 元素没能挤上来
-        ● flex 容器会使子元素收缩，且横向排列，即使子元素是 block & width: 9999px
+        ● 见上方，span 元素没能挤上来
+        ● flex 容器会使子元素收缩，且横向排列，即使子元素是 block & width: 99999px
     </pre>
     <style>
         @scope{
+            &{
+                background: #eee;
+            }
+            .container{
+                display: flex;
+                width: 35%;
+                & > *{
+                    /* width: 9999px;  */
+                    width: 25%;
+                }
+            }
+        }
+    </style>
+    <pre><code class="language-css">
+        @scope{
+            &{
+                background: #eee;
+            }
             .container{
                 display: flex;
                 width: 30%;
@@ -67,24 +85,8 @@ pre code.hljs{
                 border: solid 1px
             }
         }
-    </style>
-    <pre ><code class="language-css">
-@scope{
-    .container{
-        display: flex;
-        width: 30%;
-        & > *{
-            /* width: 50px; */
-            width: 9999px; /*  */
-        }
-    }
-    .span{
-        border: solid 1px
-    }
-}
     </code></pre>
 </div>
-<hr/>
 
 
 <div>
@@ -99,27 +101,27 @@ pre code.hljs{
     <style>
         @scope{
             .container{
-                height: 150px;
-                margin: 20px;
-                /* display: block; */
+                height: 160px;
                 display: flex;
-                flex-direction: row; /* row = 默认值*/
-                /* flex-wrap: wrap; */
-                justify-content: center; /*使子元素置于主轴（横向）的中部*/ 
-    
-                /* 👇 align 家族 */
+                /* 👇 flex 家族3兄弟 */
+                flex-direction: row; /* row | column */
+                flex-wrap: nowrap; /* nowrap | warp, wrap-reverse */
+                flex-flow: row nowrap; /* row nowrap | */
+                /* 👇 align 家族2兄弟 + 1个不孝子 */
                 align-items: center;  /* 使“单行”子元素们置于交叉轴中间 */
                 align-content: center; /* 使“多行”子元素们... */
+                /* 👇 光棍  */
+                justify-content: center; /* 使子元素置于主轴方向的中部，分散等*/ 
             }
             .container > div{
                 &:nth-child(2){
-                    /* align 家族不孝子，不听父级指令（父级 flex-wrap: nowrap; 时才有效） */
-                    /* 单行不孝子 */
-                    /* align-self: self-start;  */
-                    align-self: stretch; 
+                    /* align 家族不孝子 */
+                    /* 父级主轴无换行才有效，即父级为 flex-wrap: nowrap; 时才有效 */
+                    /* align-self: stretch;  */
+                    align-self: self-start; 
                 }
                 /* 👆 flex 子元素属性 */
-                width: 150px;
+                width: 10%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -129,19 +131,35 @@ pre code.hljs{
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
 
+<div>
+    <section class="container">
+        <div></div>
+        <div></div>
+        <div></div>
+    </section>
+    <style>
+        @scope{
+            .container{
+                display: flex;
+                flex-flow: column nowrap;
+                height: 260px;
+                justify-content: center; /* 主轴居中（此时纵向居中） */
+            }
+            .container > div{
+                
+            }
+        }
+    </style>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
 <script>
-    console.log("hljs", hljs);
-    /* hljs.highlightAll(); */
-    /* let blocks = document.querySelectorAll('.language-css'); */
-    
-    /* hljs.highlightElement(blocks[0]); */
     hljs.configure({
         languages: ['css'],
         cssSelector: '.language-css'
     });
     hljs.highlightAll();
-
 </script>
 
