@@ -1,7 +1,58 @@
+<style>
+    body{
+        padding: 20px;
+    }
+    body > article {
+        margin: 0 0 20px;
+        counter-reset: counter01;
+        padding: 20px;
+        background: #eee;
+        & > span{
+            padding: 10px;
+            counter-increment: counter01;
+            width: 30px;
+            height: 30px;
+            border: solid 1px blue;
+            /* display: inline-block; */
+            /* display: grid; */
+            /* place-items: center;  */
+            &::after{
+                content: counter(counter01);
+            }
+        }
+    }
+</style>
+<article class="article01" >
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <style>
+        @scope(){
+
+        }
+    </style>
+</article>
+
 
 <article>
-hello 
-<style>
-
-</style>
+    <span></span>
+    <span></span>
+    <span></span>
 </article>
+<style>
+    /* @property
+    @page
+    @counter-style
+    @namespace */
+    @scope{
+
+    }
+</style>
+
