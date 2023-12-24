@@ -56,11 +56,11 @@ oChooseLastTime.onclick = async function getRecord(oHandler){
     })
     let oResult2 = await get('directory');
     console.log('get 查出来了', oResult2);
-    let answer = oResult2.queryPermission(obj);
+    let answer = await oResult2.queryPermission(obj);
     console.log('提问', answer);
-    for await (let key of oResult2.keys()){
-        console.log("key", key);
-    }
+    // for await (let key of oResult2.keys()){
+    //     console.log("key", key);
+    // }
     
     // for await (let key of oResult.keys()){
     //     console.log("key", key);
@@ -68,6 +68,11 @@ oChooseLastTime.onclick = async function getRecord(oHandler){
     // value[0].getFile().then(fileInfo => {
     //     console.log("fileInfo", fileInfo);
     // });
+    await oResult2.requestPermission();
+    for await (let thisone of oResult2.entries()){
+
+        console.log(thisone);
+    }
 }
 
 oChooseFile.onclick = async function(){
