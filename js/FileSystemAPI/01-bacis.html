@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01-bacis</title>
+</head>
+<body>
+    <button id="choose-file">
+        选择文件
+    </button>
+    <button id="choose-folder">
+        选择文件夹
+    </button>
+    <button id="choose-last-time">
+        上次调用
+    </button>
+</body>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/localforage/1.10.0/localforage.js"></script>
+
+<script type="module">
+import { get, set } from 'https://unpkg.com/idb-keyval@5.0.2/dist/esm/index.js'
+// var node1 = document.createElement('script')
+// node1.src='https://cdn.bootcdn.net/ajax/libs/localforage/1.10.0/localforage.js';
+// document.body.appendChild(node1);
+
+const oChooseFile = document.querySelector('#choose-file');
+const oChooseFolder = document.querySelector('#choose-folder');
+const oChooseLastTime = document.querySelector('#choose-last-time');
+let lastTime;
+
+function toRecord(oHandler){
+    set('directory', oHandler).then(res => {
+        console.log("set 保存了", res);
+    });
+    localforage.setItem('key01', oHandler).then((value)=>{
+        // 当值被存储后，可执行其他操作
+        console.log('保存好了');
+        console.log(value);
+    })
+}
+
+
+oChooseLastTime.onclick = async function getRecord(oHandler){
+    const oResult= await localforage.getItem('key01');
+    
+    // 当值被存储后，可执行其他操作
+    const obj = {
+        mode: 'readwrite',
+    };
+    console.log('查出来了');
+    console.log(oResult);
+    oResult.queryPermission(obj).then(res=>{
+        console.log("res", res);
+    })
+    let oResult2 = await get('directory');
+    console.log('get 查出来了', oResult2);
+    let answer = oResult2.queryPermission(obj);
+    console.log('提问', answer);
+    for await (let key of oResult2.keys()){
+        console.log("key", key);
+    }
+    
+    // for await (let key of oResult.keys()){
+    //     console.log("key", key);
+    // }
+    // value[0].getFile().then(fileInfo => {
+    //     console.log("fileInfo", fileInfo);
+    // });
+}
+
+oChooseFile.onclick = async function(){
+    let oResult = await window.showOpenFilePicker();
+    if (1) oResult = oResult[0];
+    toRecord(oResult);
+    console.log(oResult);
+    console.log('kind =', oResult.kind)
+    console.log('name =', oResult.name)
+    console.log(Object.getPrototypeOf(oResult));
+    oResult.getFile().then(res=>{
+        console.log("getFile\n", res);
+    });
+
+
+
+}
+
+oChooseFolder.onclick = async function(){
+    let oResult = await window.showDirectoryPicker({
+        id: 'id01',
+    });
+    toRecord(oResult);
+    console.log(oResult);
+    console.log('kind =', oResult.kind)
+    console.log('name =', oResult.name)
+    console.log(Object.getPrototypeOf(oResult));
+
+    // console.log("oResult.keys()\n", oResult.keys());
+    for await (let key of oResult.keys()){
+        console.log("key", key);
+    }
+    // oResult.getDirectoryHandle().then(fnHandle=>{
+    //     console.log("fnHandle", fnHandle);
+    // });
+
+    oResult.queryPermission({
+        mode: 'readwrite',
+    }).then(res=>{
+        console.log("res", res);
+    })
+}
+
+
+
+</script>
+
+</html>
