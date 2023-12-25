@@ -17,7 +17,6 @@
     </button>
 </body>
 
-<script src="https://cdn.bootcdn.net/ajax/libs/localforage/1.10.0/localforage.js"></script>
 
 <script type="module">
 import { get, set } from 'https://unpkg.com/idb-keyval@5.0.2/dist/esm/index.js'
@@ -32,45 +31,21 @@ let lastTime;
 
 function toRecord(oHandler){
     set('directory', oHandler).then(res => {
-        console.log("set 保存了", res);
+        console.log("set 保存好了", res);
     });
-    localforage.setItem('key01', oHandler).then((value)=>{
-        // 当值被存储后，可执行其他操作
-        console.log('保存好了');
-        console.log(value);
-    })
 }
 
 
 oChooseLastTime.onclick = async function getRecord(oHandler){
-    const oResult= await localforage.getItem('key01');
-    
     // 当值被存储后，可执行其他操作
-    const obj = {
-        mode: 'readwrite',
-    };
-    console.log('查出来了');
-    console.log(oResult);
-    oResult.queryPermission(obj).then(res=>{
-        console.log("res", res);
-    })
+    const obj = { mode: 'readwrite', };
+
     let oResult2 = await get('directory');
     console.log('get 查出来了', oResult2);
     let answer = await oResult2.queryPermission(obj);
     console.log('提问', answer);
-    // for await (let key of oResult2.keys()){
-    //     console.log("key", key);
-    // }
-    
-    // for await (let key of oResult.keys()){
-    //     console.log("key", key);
-    // }
-    // value[0].getFile().then(fileInfo => {
-    //     console.log("fileInfo", fileInfo);
-    // });
     await oResult2.requestPermission();
     for await (let thisone of oResult2.entries()){
-
         console.log(thisone);
     }
 }
@@ -86,9 +61,6 @@ oChooseFile.onclick = async function(){
     oResult.getFile().then(res=>{
         console.log("getFile\n", res);
     });
-
-
-
 }
 
 oChooseFolder.onclick = async function(){
@@ -100,7 +72,6 @@ oChooseFolder.onclick = async function(){
     console.log('kind =', oResult.kind)
     console.log('name =', oResult.name)
     console.log(Object.getPrototypeOf(oResult));
-
     // console.log("oResult.keys()\n", oResult.keys());
     for await (let key of oResult.keys()){
         console.log("key", key);
@@ -108,7 +79,6 @@ oChooseFolder.onclick = async function(){
     // oResult.getDirectoryHandle().then(fnHandle=>{
     //     console.log("fnHandle", fnHandle);
     // });
-
     oResult.queryPermission({
         mode: 'readwrite',
     }).then(res=>{
